@@ -89,10 +89,13 @@ public final class HashPMap<K,V> extends AbstractMap<K,V> implements PMap<K,V> {
 	
 	@Override
 	public V get(final Object key) {
-		PSequence<Entry<K,V>> entries = getEntries(Objects.hashCode(key));
-		for(Entry<K,V> entry : entries)
-			if(Objects.equals(entry.getKey(), key))
+		ConsPStack<Entry<K,V>> entries = getEntries(Objects.hashCode(key));
+		while(entries != null && !entries.isEmpty()) {
+			Entry<K,V> entry = entries.first;
+			if (Objects.equals(entry.getKey(), key))
 				return entry.getValue();
+			entries = entries.rest;
+		}
 		return null;
 	}
 
@@ -150,9 +153,10 @@ public final class HashPMap<K,V> extends AbstractMap<K,V> implements PMap<K,V> {
 
 	
 //// PRIVATE STATIC UTILITIES ////
-	private static <K,V> int keyIndexIn(final PSequence<Entry<K,V>> entries, final Object key) {
+	private static <K,V> int keyIndexIn(final ConsPStack<Entry<K,V>> entries, final Object key) {
 		int i=0;
-		for(Entry<K,V> entry : entries) {
+		while(entries != null && !entries.isEmpty()) {
+			Entry<K,V> entry = entries.first;
 			if(Objects.equals(entry.getKey(), key))
 				return i;
 			i++;
