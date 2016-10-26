@@ -115,7 +115,11 @@ public final class HashPMap<K,V> extends AbstractMap<K,V> implements PMap<K,V> {
 		PSequence<Entry<K,V>> entries = getEntries(Objects.hashCode(key));
 		int size0 = entries.size(),
 			i = keyIndexIn(entries, key);
-		if(i!=-1) entries = entries.minus(i);
+		if(i!=-1) {
+			if (Objects.equals(entries.get(i).getValue(), value))
+				return this;
+			entries = entries.minus(i);
+		}
 		entries = entries.plus(new org.pcollections.SimpleImmutableEntry<K,V>(key, value));
 		return new HashPMap<K,V>(intMap.plus(Objects.hashCode(key), entries),
 				size-size0+entries.size());
