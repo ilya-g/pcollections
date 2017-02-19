@@ -94,6 +94,12 @@ public class TreePVectorTest extends TestCase {
 		}
 	}
 
+	public void testIterator() {
+		UtilityTest.iteratorExceptions(TreePVector.empty().iterator());
+		UtilityTest.iteratorExceptions(TreePVector.singleton(10).iterator());
+	}
+
+
 	public void testSubListIntInt() {
 		// TODO
 	}

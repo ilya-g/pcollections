@@ -5,6 +5,7 @@ import java.util.*;
 import junit.framework.TestCase;
 
 import org.pcollections.Empty;
+import org.pcollections.OrderedPSet;
 import org.pcollections.POrderedSet;
 import org.pcollections.PSet;
 
@@ -68,4 +69,10 @@ public class OrderedPSetTest extends TestCase {
 		UtilityTest.assertEqualsAndHash(expected, s);
 		UtilityTest.assertEqualsAndHash(expectedOrdered, new ArrayList<Long>(s));
 	}
+
+	public void testIterator() {
+		UtilityTest.iteratorExceptions(Empty.orderedSet().iterator());
+		UtilityTest.iteratorExceptions(OrderedPSet.singleton(10).iterator());
+	}
+
 }
