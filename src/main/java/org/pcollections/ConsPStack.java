@@ -1,10 +1,6 @@
 package org.pcollections;
 
-import java.util.AbstractSequentialList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ListIterator;
-
+import java.util.*;
 
 
 /**
@@ -98,11 +94,15 @@ public final class ConsPStack<E> extends AbstractSequentialList<E> implements PS
 				return index-1; }
 			public E next() {
 				E e = next.first;
+				if (e == null && !hasNext())
+					throw new NoSuchElementException();
 				next = next.rest;
 				return e;
 			}
 			public E previous() {
 				System.err.println("ConsPStack.listIterator().previous() is inefficient, don't use it!");
+				if (!hasPrevious())
+					throw new NoSuchElementException();
 				next = subList(index-1); // go from beginning...
 				return next.first;
 			}

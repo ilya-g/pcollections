@@ -3,6 +3,7 @@ package org.pcollections;
 import java.util.AbstractQueue;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 // TODO javadoc
 // TODO tests
@@ -61,6 +62,8 @@ public class AmortizedPQueue<E> extends AbstractQueue<E> implements PQueue<E> {
 
 			public E next() {
 				E e = queue.peek();
+				if (e == null && !hasNext())
+					throw new NoSuchElementException();
 				queue = queue.minus();
 				return e;
 			}

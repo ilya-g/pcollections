@@ -269,10 +269,10 @@ class IntTree<V> {
 			return stack.size()>0; }
 		
 		public Entry<Integer,V> next() {
-			IntTree<V> node = stack.get(0);
-			if (node == null)
+			if (stack.isEmpty())
 				throw new NoSuchElementException();
 
+			IntTree<V> node = stack.get(0);
 			final Entry<Integer,V> result = new org.pcollections.SimpleImmutableEntry<Integer,V>(key, node.value);
 			
 			// find next node.
